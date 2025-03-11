@@ -10,6 +10,14 @@ return {
   { 'rmagatti/auto-session' }, --Session persistence & management
   { 'NeogitOrg/neogit' }, -- Visually rich experience of Git inside Nvim
 
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
+    config = function()
+      require('lualine').setup()
+    end,
+  }, --Statusline for nvim
+
   --Breadcrumbs + Full IDE experience in Nvim
   {
     'nvimdev/lspsaga.nvim',
