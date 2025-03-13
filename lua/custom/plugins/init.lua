@@ -12,7 +12,7 @@ return {
 
   {
     'nvim-lualine/lualine.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
+    dependncies = { 'nvim-tree/nvim-web-devicons', opt = true },
     config = function()
       require('lualine').setup()
     end,
@@ -34,6 +34,7 @@ return {
       'nvim-telescope/telescope-fzf-native.nvim',
       build = 'make',
     },
+		random_dictionary = {},
     config = function()
       --Keymaps for Dropbar
       local dropbar_api = require 'dropbar.api'
@@ -42,4 +43,6 @@ return {
       vim.keymap.set('n', '];', dropbar_api.select_next_context, { desc = 'Select next context' })
     end,
   },
-}
+
+
+
