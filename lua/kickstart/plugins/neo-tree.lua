@@ -12,20 +12,31 @@ return {
   cmd = 'Neotree',
   keys = {
     { '\\', ':Neotree reveal<CR>', desc = 'NeoTree reveal', silent = true },
+    -- { '\\g', ':Neotree focus git_status right<CR>', desc = 'NeoTree Git status', silent = true },
   },
   opts = {
     filesystem = {
       window = {
-        width = 40,
+        width = 30,
         mappings = {
           ['\\'] = 'close_window',
+          ['P'] = { 'toggle_preview', config = {
+            title = 'File Preview',
+          } },
+          ['<C-f>'] = { 'scroll_preview', config = { direction = -5 } },
+          ['<C-b>'] = { 'scroll_preview', config = { direction = 5 } },
         },
       },
     },
 
     source_selector = {
-      winbar = true,
+      -- winbar = true,
       statusline = false,
+
+      sources = {
+        { source = 'filesystem' },
+        { source = 'git_status' },
+      },
     },
   },
 }

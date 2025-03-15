@@ -23,14 +23,20 @@ return {
   { 'rmagatti/auto-session' }, --Session persistence & management
   { 'NeogitOrg/neogit' }, -- Visually rich experience of Git inside Nvim
 
+  --Statusline for nvim
   {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
-    config = function()
-      require('lualine').setup()
-    end,
-  }, --Statusline for nvim
-
+    opts = {
+      theme = 'gruvbox_dark',
+    },
+    sections = {
+      lualine_x = { 'fileformat', 'filetype' },
+    },
+    inactive_sections = {
+      lualine_c = { 'filename' },
+    },
+  },
   --Breadcrumbs + Full IDE experience in Nvim
   -- {
   --   'nvimdev/lspsaga.nvim',
@@ -40,6 +46,7 @@ return {
   --   end,
   -- },
   --
+  --Provides breadcrumbs on the top for navigation & jumps
   {
     'Bekaboo/dropbar.nvim',
     --Parameters for the plugin
