@@ -3,10 +3,23 @@
 --
 -- See the kickstart.nvim README for more information
 return {
-  { 'mfussenegger/nvim-dap' }, --Debugger plugin
+  -- { 'mfussenegger/nvim-dap' }, --Debugger plugin
   { 'Bekaboo/deadcolumn.nvim' }, --Shows deadline to manage code length
-  { 'rcarriga/nvim-dap-ui' }, --UI for DAP debugger plugin
-  { 'akinsho/toggleterm.nvim' }, --Terminal toggle & split plugin
+  { 'mrjones2014/smart-splits.nvim' },
+  -- { 'rcarriga/nvim-dap-ui' }, --UI for DAP debugger plugin
+  {
+    'akinsho/toggleterm.nvim',
+    config = true,
+    keys = {
+      { '<leader>bn', '<cmd>TermNew<cr>', desc = 'Create [N]ew Terminal' },
+    },
+    opts = {
+      -- open_mapping = [[<c-\>]],
+      shell = vim.o.shell,
+      direction = 'vertical',
+      size = 60,
+    },
+  },
   { 'rmagatti/auto-session' }, --Session persistence & management
   { 'NeogitOrg/neogit' }, -- Visually rich experience of Git inside Nvim
 
@@ -19,14 +32,14 @@ return {
   }, --Statusline for nvim
 
   --Breadcrumbs + Full IDE experience in Nvim
-  {
-    'nvimdev/lspsaga.nvim',
-    after = 'nvim-lspconfig',
-    config = function()
-      require('lspsaga').setup {}
-    end,
-  },
-
+  -- {
+  --   'nvimdev/lspsaga.nvim',
+  --   after = 'nvim-lspconfig',
+  --   config = function()
+  --     require('lspsaga').setup {}
+  --   end,
+  -- },
+  --
   {
     'Bekaboo/dropbar.nvim',
     --Parameters for the plugin

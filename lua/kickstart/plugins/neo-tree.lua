@@ -3,7 +3,7 @@
 
 return {
   'nvim-neo-tree/neo-tree.nvim',
-  version = '*',
+  branch = 'v3.x',
   dependencies = {
     'nvim-lua/plenary.nvim',
     'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
@@ -16,10 +16,16 @@ return {
   opts = {
     filesystem = {
       window = {
+        width = 40,
         mappings = {
           ['\\'] = 'close_window',
         },
       },
+    },
+
+    source_selector = {
+      winbar = true,
+      statusline = false,
     },
   },
 }
