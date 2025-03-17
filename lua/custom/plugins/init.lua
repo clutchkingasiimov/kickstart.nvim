@@ -3,13 +3,27 @@
 --
 -- See the kickstart.nvim README for more information
 return {
-  { 'mfussenegger/nvim-dap' }, --Debugger plugin
+  -- { 'mfussenegger/nvim-dap' }, --Debugger plugin
   { 'Bekaboo/deadcolumn.nvim' }, --Shows deadline to manage code length
-  { 'rcarriga/nvim-dap-ui' }, --UI for DAP debugger plugin
-  { 'akinsho/toggleterm.nvim' }, --Terminal toggle & split plugin
+  { 'mrjones2014/smart-splits.nvim' },
+  -- { 'rcarriga/nvim-dap-ui' }, --UI for DAP debugger plugin
+  {
+    'akinsho/toggleterm.nvim',
+    config = true,
+    keys = {
+      { '<leader>bn', '<cmd>TermNew<cr>', desc = 'Create [N]ew Terminal' },
+    },
+    opts = {
+      -- open_mapping = [[<c-\>]],
+      shell = vim.o.shell,
+      direction = 'vertical',
+      size = 60,
+    },
+  },
   { 'rmagatti/auto-session' }, --Session persistence & management
   { 'NeogitOrg/neogit' }, -- Visually rich experience of Git inside Nvim
 
+  --Statusline for nvim
   {
     'nvim-lualine/lualine.nvim',
     dependncies = { 'nvim-tree/nvim-web-devicons', opt = true },
@@ -25,8 +39,27 @@ return {
     config = function()
       require('lspsaga').setup {}
     end,
+    dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
+    opts = {
+      theme = 'gruvbox_dark',
+    },
+    sections = {
+      lualine_x = { 'fileformat', 'filetype' },
+    },
+    inactive_sections = {
+      lualine_c = { 'filename' },
+    },
   },
-
+  --Breadcrumbs + Full IDE experience in Nvim
+  -- {
+  --   'nvimdev/lspsaga.nvim',
+  --   after = 'nvim-lspconfig',
+  --   config = function()
+  --     require('lspsaga').setup {}
+  --   end,
+  -- },
+  --
+  --Provides breadcrumbs on the top for navigation & jumps
   {
     'Bekaboo/dropbar.nvim',
     --Parameters for the plugin
@@ -34,7 +67,7 @@ return {
       'nvim-telescope/telescope-fzf-native.nvim',
       build = 'make',
     },
-		random_dictionary = {},
+    random_dictionary = {},
     config = function()
       --Keymaps for Dropbar
       local dropbar_api = require 'dropbar.api'
@@ -43,6 +76,4 @@ return {
       vim.keymap.set('n', '];', dropbar_api.select_next_context, { desc = 'Select next context' })
     end,
   },
-
-
-
+}
