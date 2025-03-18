@@ -5,7 +5,7 @@
 return {
   -- { 'mfussenegger/nvim-dap' }, --Debugger plugin
   { 'Bekaboo/deadcolumn.nvim' }, --Shows deadline to manage code length
-  { 'mrjones2014/smart-splits.nvim' },
+  -- { 'mrjones2014/smart-splits.nvim' } Used for smart splitting when using Wezterm
   -- { 'rcarriga/nvim-dap-ui' }, --UI for DAP debugger plugin
   {
     'akinsho/toggleterm.nvim',
@@ -21,7 +21,7 @@ return {
     },
   },
   { 'rmagatti/auto-session' }, --Session persistence & management
-  { 'NeogitOrg/neogit' }, -- Visually rich experience of Git inside Nvim
+  -- { 'NeogitOrg/neogit' }, -- Visually rich experience of Git inside Nvim
 
   --Statusline for nvim
   {
@@ -31,35 +31,16 @@ return {
       require('lualine').setup()
     end,
   }, --Statusline for nvim
-
-  --Breadcrumbs + Full IDE experience in Nvim
-  {
-    'nvimdev/lspsaga.nvim',
-    after = 'nvim-lspconfig',
-    config = function()
-      require('lspsaga').setup {}
-    end,
-    dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
-    opts = {
-      theme = 'gruvbox_dark',
-    },
-    sections = {
-      lualine_x = { 'fileformat', 'filetype' },
-    },
-    inactive_sections = {
-      lualine_c = { 'filename' },
-    },
+  opts = {
+    theme = 'gruvbox_dark',
   },
-  --Breadcrumbs + Full IDE experience in Nvim
-  -- {
-  --   'nvimdev/lspsaga.nvim',
-  --   after = 'nvim-lspconfig',
-  --   config = function()
-  --     require('lspsaga').setup {}
-  --   end,
-  -- },
-  --
-  --Provides breadcrumbs on the top for navigation & jumps
+  sections = {
+    lualine_x = { 'fileformat', 'filetype' },
+  },
+  inactive_sections = {
+    lualine_c = { 'filename' },
+  },
+
   {
     'Bekaboo/dropbar.nvim',
     --Parameters for the plugin
