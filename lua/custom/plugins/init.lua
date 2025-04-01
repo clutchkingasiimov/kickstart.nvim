@@ -7,19 +7,6 @@ return {
   { 'Bekaboo/deadcolumn.nvim' }, --Shows deadline to manage code length
   -- { 'mrjones2014/smart-splits.nvim' } Used for smart splitting when using Wezterm
   -- { 'rcarriga/nvim-dap-ui' }, --UI for DAP debugger plugin
-  {
-    'akinsho/toggleterm.nvim',
-    config = true,
-    keys = {
-      { '<leader>bn', '<cmd>TermNew<cr>', desc = 'Create [N]ew Terminal' },
-    },
-    opts = {
-      -- open_mapping = [[<c-\>]],
-      shell = vim.o.shell,
-      direction = 'vertical',
-      size = 60,
-    },
-  },
   { 'rmagatti/auto-session' }, --Session persistence & management
   -- { 'NeogitOrg/neogit' }, -- Visually rich experience of Git inside Nvim
 
