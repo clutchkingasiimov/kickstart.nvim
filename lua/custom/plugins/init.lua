@@ -7,6 +7,10 @@ return {
   { 'Bekaboo/deadcolumn.nvim' }, --Shows deadline to manage code length
   -- { 'mrjones2014/smart-splits.nvim' } Used for smart splitting when using Wezterm
   -- { 'rcarriga/nvim-dap-ui' }, --UI for DAP debugger plugin
+
+  -- Markdown and TeX viewer
+  { 'OXY2DEV/markview.nvim', lazy = false },
+
   {
     'akinsho/toggleterm.nvim',
     config = true,
@@ -20,27 +24,31 @@ return {
       size = 60,
     },
   },
-  { 'rmagatti/auto-session' }, --Session persistence & management
+
+  --Session persistence & management
+  { 'rmagatti/auto-session' },
   -- { 'NeogitOrg/neogit' }, -- Visually rich experience of Git inside Nvim
 
   --Statusline for nvim
   {
     'nvim-lualine/lualine.nvim',
     dependncies = { 'nvim-tree/nvim-web-devicons', opt = true },
-    config = function()
-      require('lualine').setup()
-    end,
-  }, --Statusline for nvim
-  opts = {
-    theme = 'gruvbox_dark',
-  },
-  sections = {
-    lualine_x = { 'fileformat', 'filetype' },
-  },
-  inactive_sections = {
-    lualine_c = { 'filename' },
+    -- config = function()
+    --   require('lualine').setup()
+    -- end,
+
+    opts = {
+      theme = 'gruvbox',
+    },
+    sections = {
+      lualine_x = { 'fileformat', 'filetype' },
+    },
+    inactive_sections = {
+      lualine_c = { 'filename' },
+    },
   },
 
+  --Breadcrumb plugin for easier access
   {
     'Bekaboo/dropbar.nvim',
     --Parameters for the plugin
