@@ -191,9 +191,18 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+vim.keymap.set('i', '<A-h>', '<C-\\><C-N><C-w>h', { noremap = true, silent = true })
+vim.keymap.set('i', '<A-j>', '<C-\\><C-N><C-w>j', { noremap = true, silent = true })
+vim.keymap.set('i', '<A-k>', '<C-\\><C-N><C-w>k', { noremap = true, silent = true })
+vim.keymap.set('i', '<A-l>', '<C-\\><C-N><C-w>l', { noremap = true, silent = true })
+
+--Map 'esc' to exit terminal mode and enter normal mode
+vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], { desc = 'Exit terminal mode' })
+vim.keymap.set('n', '<leader>bl', '<cmd>:vsplit term://powershell.exe<CR>', { desc = 'Open Powershell' })
+vim.keymap.set('n', '<leader>bj', '<cmd>:split term://powershell.exe<CR>', { desc = 'Open Powershell Below' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
-
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`
