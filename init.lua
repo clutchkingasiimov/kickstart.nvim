@@ -198,8 +198,10 @@ vim.keymap.set('i', '<A-l>', '<C-\\><C-N><C-w>l', { noremap = true, silent = tru
 
 --Map 'esc' to exit terminal mode and enter normal mode
 vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], { desc = 'Exit terminal mode' })
-vim.keymap.set('n', '<leader>bl', '<cmd>:vsplit term://powershell.exe<CR>', { desc = 'Open Powershell' })
-vim.keymap.set('n', '<leader>bj', '<cmd>:split term://powershell.exe<CR>', { desc = 'Open Powershell Below' })
+vim.keymap.set('n', '<leader>bl', '<cmd>:vsplit term://bash<CR>', { desc = '[B]ash [L]eft' })
+vim.keymap.set('n', '<leader>bj', '<cmd>:split term://bash<CR>', { desc = '[B]ash [B]ottom' })
+vim.keymap.set('n', '<leader>bwl', '<cmd>:vsplit term://powershell.exe<CR>', { desc = '[W]indows Powershell' })
+vim.keymap.set('n', '<leader>bwj', '<cmd>:split term://powershell.exe<CR>', { desc = '[W]indows Powershell Below' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
