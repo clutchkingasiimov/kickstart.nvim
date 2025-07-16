@@ -442,6 +442,26 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sR', builtin.registers, { desc = '[S]earch [Re]gisters' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
+      -- load the session for the current directory
+      vim.keymap.set('n', '<leader>qs', function()
+        require('persistence').load()
+      end)
+
+      -- select a session to load
+      vim.keymap.set('n', '<leader>qS', function()
+        require('persistence').select()
+      end)
+
+      -- load the last session
+      vim.keymap.set('n', '<leader>ql', function()
+        require('persistence').load { last = true }
+      end)
+
+      -- stop Persistence => session won't be saved on exit
+      vim.keymap.set('n', '<leader>qd', function()
+        require('persistence').stop()
+      end)
+
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
         -- You can pass additional configuration to Telescope to change the theme, layout, etc.
@@ -930,7 +950,7 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'gruvbox'
+      vim.cmd.colorscheme 'carbonfox'
     end,
   },
 
@@ -980,7 +1000,7 @@ require('lazy').setup({
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'python' },
+      ensure_installed = { 'bash', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'python' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {

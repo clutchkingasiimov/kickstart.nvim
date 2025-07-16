@@ -5,12 +5,39 @@
 return {
   -- { 'mfussenegger/nvim-dap' }, --Debugger plugin
   { 'Bekaboo/deadcolumn.nvim' }, --Shows deadline to manage code length
-  -- { 'mrjones2014/smart-splits.nvim' } Used for smart splitting when using Wezterm
+  { 'EdenEast/nightfox.nvim' }, --Nightfox theme plugin
   -- { 'rcarriga/nvim-dap-ui' }, --UI for DAP debugger plugin
   {},
-  { 'rmagatti/auto-session' }, --Session persistence & management
+  { 'folke/persistence.nvim', event = 'BufReadPre' }, --Session persistence & management
   -- { 'NeogitOrg/neogit' }, -- Visually rich experience of Git inside Nvim
+  --Harpoon2 plugin (Fast file navigation)
+  {
+    'ThePrimeagen/harpoon',
+    branch = 'harpoon2',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      local harpoon = require 'harpoon'
 
+      --Needs this function call to run
+      harpoon:setup()
+      -----
+      vim.keymap.set('n', '<leader>a', function()
+        harpoon:list():add()
+      end, { desc = 'Harpoon [a]dd' })
+      vim.keymap.set('n', '1', function()
+        harpoon:list():select(1)
+      end)
+      vim.keymap.set('n', '2', function()
+        harpoon:list():select(2)
+      end)
+      vim.keymap.set('n', '3', function()
+        harpoon:list():select(3)
+      end)
+      vim.keymap.set('n', '4', function()
+        harpoon:list():select(4)
+      end)
+    end,
+  },
   --Statusline for nvim
   {
     'nvim-lualine/lualine.nvim',
@@ -19,6 +46,7 @@ return {
       require('lualine').setup()
     end,
   }, --Statusline for nvim
+  --Gruvbox theme
   opts = {
     theme = 'gruvbox_dark',
   },
