@@ -263,7 +263,6 @@ require('lazy').setup({
     end,
   },
 
-
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
   -- place them in the correct locations.
@@ -281,18 +280,20 @@ require('lazy').setup({
   require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
   require 'kickstart.plugins.which-key',
   require 'kickstart.plugins.telescope',
-  -- require 'kickstart.plugins.lspconfig',
+  require 'kickstart.plugins.lspconfig',
   require 'kickstart.plugins.autoformat',
   require 'kickstart.plugins.autocompletion',
   require 'kickstart.plugins.mini',
   require 'kickstart.plugins.nvim-treesitter',
   require 'kickstart.plugins.todo-comments',
+  require 'kickstart.plugins.lazydev',
 
-    -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-    --    This is the easiest way to modularize your config.
+  require 'custom.plugins.toggleterm',
+  -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
+  --    This is the easiest way to modularize your config.
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-    { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!
