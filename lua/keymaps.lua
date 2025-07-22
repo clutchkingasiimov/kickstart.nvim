@@ -42,6 +42,7 @@ vim.keymap.set('n', '<leader>bl', '<cmd>:vsplit term://bash<CR>', { desc = '[B]a
 vim.keymap.set('n', '<leader>bj', '<cmd>:split term://bash<CR>', { desc = '[B]ash [B]ottom' })
 vim.keymap.set('n', '<leader>bwl', '<cmd>:vsplit term://powershell.exe<CR>', { desc = '[W]indows Powershell' })
 vim.keymap.set('n', '<leader>bwj', '<cmd>:split term://powershell.exe<CR>', { desc = '[W]indows Powershell Below' })
+vim.keymap.set('n', '<leader>bt', '<cmd>:ToggleTermToggleAll<CR>', { desc = '[T]oggle all terminals' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`

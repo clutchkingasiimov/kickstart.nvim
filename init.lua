@@ -287,8 +287,8 @@ require('lazy').setup({
   require 'kickstart.plugins.nvim-treesitter',
   require 'kickstart.plugins.todo-comments',
   require 'kickstart.plugins.lazydev',
-
   require 'custom.plugins.toggleterm',
+  require 'custom.plugins.harpoon',
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
   --
