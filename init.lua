@@ -88,13 +88,15 @@ P.S. You can delete this when you're done too. It's your config now! :)
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
+
+vim.o.background = 'dark'
+
 vim.g.maplocalleader = ' '
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
-vim.o.guifont = 'Consolas:h14' -- Adjust the font and size as needed
+vim.o.guifont = 'Consolas:h12' -- Adjust the font and size as needed
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
-
+vim.g.have_nerd_font = true
 -- [[ Setting options ]]
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!
@@ -260,6 +262,7 @@ require('lazy').setup({
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
       vim.cmd.colorscheme 'carbonfox'
+      vim.o.background = "dark"
     end,
   },
 
@@ -275,14 +278,15 @@ require('lazy').setup({
   -- require 'kickstart.plugins.debug',
   require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
-  -- require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.neo-tree',
   require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
   require 'kickstart.plugins.which-key',
   require 'kickstart.plugins.telescope',
   require 'kickstart.plugins.lspconfig',
   require 'kickstart.plugins.autoformat',
-  require 'kickstart.plugins.autocompletion',
+  -- require 'kickstart.plugins.autocompletion',
+  require 'kickstart.plugins.blink_autocomplete',
   require 'kickstart.plugins.mini',
   require 'kickstart.plugins.nvim-treesitter',
   require 'kickstart.plugins.todo-comments',

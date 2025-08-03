@@ -6,15 +6,15 @@ return {
       -- Automatically install LSPs and related tools to stdpath for Neovim
       -- Mason must be loaded before its dependents so we need to set it up here.
       -- NOTE: `opts = {}` is the same as calling `require('mason').setup({})`
-      { 'williamboman/mason.nvim', opts = {} },
-      'williamboman/mason-lspconfig.nvim',
+      { 'mason-org/mason.nvim', opts = {} },
+      'mason-org/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
       -- Useful status updates for LSP.
       { 'j-hui/fidget.nvim', opts = {} },
 
       -- Allows extra capabilities provided by nvim-cmp
-      'hrsh7th/cmp-nvim-lsp',
+      'saghen/blink.cmp',
     },
     config = function()
       -- Brief aside: **What is LSP?**
@@ -192,8 +192,9 @@ return {
       --  By default, Neovim doesn't support everything that is in the LSP specification.
       --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
       --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+      -- local capabilities = vim.lsp.protocol.make_client_capabilities()
+      -- capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+      local capabilities = require('blink.cmp').get_lsp_capabilities()
 
       -- Enable the following language servers
       --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -207,8 +208,25 @@ return {
       local servers = {
         -- clangd = {},
         -- gopls = {}
-        -- pyright = {},
-        -- rust_analyzer = {},
+        pylsp = {
+          filetypes = { 'python' },
+          settings = {
+            pylsp = {
+              configurationSources = { 'pycodestyle' },
+              plugins = {
+                pycodestyle = {
+                  enabled = true,
+                  ignore = 'W291',
+                  maxLineLength = 80,
+                },
+                pyflakes = { enabled = false },
+                -- Also try disabling other linters that might be interfering
+                pylint = { enabled = false },
+                flake8 = { enabled = false },
+              },
+            },
+          },
+        }, -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -217,7 +235,6 @@ return {
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         -- ts_ls = {},
         --
-
         lua_ls = {
           -- cmd = { ... },
           -- filetypes = { ... },
@@ -233,7 +250,7 @@ return {
           },
         },
       }
-
+      -- print('Servers table:', vim.inspect(servers))
       -- Ensure the servers and tools above are installed
       --
       -- To check the current status of installed tools and/or manually install
@@ -250,26 +267,32 @@ return {
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
-        'black', -- Python static analysis by Microsoft
-        'pylint', -- Python linter
-        'debugpy', -- Python debugger
+        'lua_ls', -- Lua LSP server
+        -- 'black', -- Python static analysis by Microsoft
+        -- 'pylint', -- Python linter
+        'pylsp', -- Python LSP server
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       require('mason-lspconfig').setup {
-        ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
-        automatic_installation = false,
-        handlers = {
-          function(server_name)
-            local server = servers[server_name] or {}
-            -- This handles overriding only values explicitly passed
-            -- by the server configuration above. Useful when disabling
-            -- certain features of an LSP (for example, turning off formatting for ts_ls)
-            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            require('lspconfig')[server_name].setup(server)
-          end,
-        },
+        ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer
+        automatic_enable = { 'pylsp' },
       }
+      -- NOTE: Try to modularize the LSP configurations
+      vim.lsp.config('pylsp', {
+        root_markers = { 'pyproject.toml', 'setup.py', 'setup.cfg', 'requirements.txt', 'Pipfile', '.git' },
+        settings = {
+          pylsp = {
+            plugins = {
+              pycodestyle = {
+                enabled = true,
+                ignore = { 'W291', 'E265' },
+                maxLineLength = 79,
+              },
+            },
+          },
+        },
+      })
     end,
-  }
+  },
 }

@@ -4,10 +4,7 @@
 -- See the kickstart.nvim README for more information
 return {
   -- { 'mfussenegger/nvim-dap' }, --Debugger plugin
-  { 'Bekaboo/deadcolumn.nvim' }, --Shows deadline to manage code length
   { 'EdenEast/nightfox.nvim' }, --Nightfox theme plugin
-  -- { 'rcarriga/nvim-dap-ui' }, --UI for DAP debugger plugin
-  {},
   { 'folke/persistence.nvim', event = 'BufReadPre' }, --Session persistence & management
   -- { 'NeogitOrg/neogit' }, -- Visually rich experience of Git inside Nvim
   --Harpoon2 plugin (Fast file navigation)
@@ -18,12 +15,12 @@ return {
   --   config = function()
   --     local harpoon = require 'harpoon'
   --
-  --     --Needs this function call to run
+  --     --Needs this function call to riue
   --     harpoon:setup()
   --     -----
   --     vim.keymap.set('n', '<leader>a', function()
   --       harpoon:list():add()
-  --     end, { desc = 'Harpoon [a]dd' })
+  --     end, { desc = 'Harpoon [a]dd' })custom
   --     vim.keymap.set('n', '1', function()
   --       harpoon:list():select(1)
   --     end)
@@ -41,25 +38,31 @@ return {
   --Statusline for nvim
   {
     'nvim-lualine/lualine.nvim',
-    dependncies = { 'nvim-tree/nvim-web-devicons', opt = true },
+    dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
     config = function()
-      require('lualine').setup()
+      local custom_powerline = require 'lualine.themes.powerline_dark'
+      custom_powerline.inactive.c.fg = '#FF0000'
+      require('lualine').setup {
+        options = {
+          icons_enabled = true,
+          theme = custom_powerline,
+          section_separators = {},
+        },
+        sections = {
+          lualine_b = { 'branch' },
+          lualine_x = { 'fileformat', 'filetype' },
+          lualine_y = { '' },
+        },
+        inactive_sections = {
+          lualine_c = { 'filename' },
+        },
+      }
     end,
-  }, --Statusline for nvim
-  --Gruvbox theme
-  opts = {
-    theme = 'gruvbox_dark',
-  },
-  sections = {
-    lualine_x = { 'fileformat', 'filetype' },
-  },
-  inactive_sections = {
-    lualine_c = { 'filename' },
   },
 
   -- {
   --   'Bekaboo/dropbar.nvim',
-  --   --Parameters for the plugin
+  --   -- Parameters for the plugin
   --   dependencies = {
   --     'nvim-telescope/telescope-fzf-native.nvim',
   --     build = 'make',
