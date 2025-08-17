@@ -91,6 +91,14 @@ vim.g.mapleader = ' '
 
 vim.o.background = 'dark'
 
+-- Code folding arguments
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.opt.foldcolumn = '0'
+vim.opt.foldtext = ''
+vim.opt.foldlevel = 99
+vim.opt.foldnestmax = 4
+
 vim.g.maplocalleader = ' '
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -262,7 +270,7 @@ require('lazy').setup({
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
       vim.cmd.colorscheme 'carbonfox'
-      vim.o.background = "dark"
+      vim.o.background = 'dark'
     end,
   },
 

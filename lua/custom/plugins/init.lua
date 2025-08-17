@@ -49,7 +49,19 @@ return {
           section_separators = {},
         },
         sections = {
-          lualine_b = { 'branch' },
+          lualine_b = { 'branch', 'diff' },
+          lualine_c = {
+            {
+              'filename',
+              path = 1,
+              symbols = {
+                readonly = '',
+                unnamed = '[UNNAMED]',
+                modified = '󱓩',
+                newfile = '󰎔',
+              },
+            },
+          },
           lualine_x = { 'fileformat', 'filetype' },
           lualine_y = { '' },
         },
