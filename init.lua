@@ -94,7 +94,7 @@ vim.o.background = 'dark'
 vim.g.maplocalleader = ' '
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
-vim.o.guifont = 'Consolas:h12' -- Adjust the font and size as needed
+vim.o.guifont = 'Consolas:h10' -- Adjust the font and size as needed
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 -- [[ Setting options ]]
@@ -252,7 +252,7 @@ require('lazy').setup({
     --
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
     -- 'folke/tokyonight.nvim',
-    'morhetz/gruvbox',
+    'EdenEast/nightfox.nvim', --Nightfox theme plugin
     priority = 1000, -- Make sure to load this before all the other start plugins.
     config = function()
       ---@diagnostic disable-next-line: missing-fields
@@ -262,7 +262,7 @@ require('lazy').setup({
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
       vim.cmd.colorscheme 'carbonfox'
-      vim.o.background = "dark"
+      vim.o.background = 'dark'
     end,
   },
 
@@ -277,7 +277,7 @@ require('lazy').setup({
   --
   -- require 'kickstart.plugins.debug',
   require 'kickstart.plugins.indent_line',
-  -- require 'kickstart.plugins.lint',
+  require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.neo-tree',
   require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
@@ -291,13 +291,16 @@ require('lazy').setup({
   require 'kickstart.plugins.nvim-treesitter',
   require 'kickstart.plugins.todo-comments',
   require 'kickstart.plugins.lazydev',
+  --
+  -- Custom plugins imported from /custom
   require 'custom.plugins.toggleterm',
   require 'custom.plugins.harpoon',
+  require 'custom.plugins.lualine',
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  { import = 'custom.plugins' },
+  -- { import = 'custom.plugins' },
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!
