@@ -9,15 +9,32 @@ return {
         options = {
           icons_enabled = true,
           theme = custom_powerline,
-          section_separators = {},
+          -- section_separators = { left = '', right = '' },
         },
         sections = {
-          lualine_b = { 'branch' },
+          lualine_b = { 'branch', 'diff', 'diagnostics' },
+          lualine_c = {
+            {
+              'filename',
+              path = 1,
+              symbols = {
+                readonly = '',
+                unnamed = '[UNNAMED]',
+                modified = '󱓩',
+                newfile = '󰎔',
+              },
+            },
+          },
           lualine_x = { 'fileformat', 'filetype' },
           lualine_y = { '' },
         },
         inactive_sections = {
-          lualine_c = { 'filename' },
+          lualine_c = {
+            {
+              'filename',
+              path = 1,
+            },
+          },
         },
       }
     end,
