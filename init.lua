@@ -304,6 +304,7 @@ require('lazy').setup({
   require 'custom.plugins.toggleterm',
   require 'custom.plugins.harpoon',
   require 'custom.plugins.lualine',
+  require 'custom.plugins.zenmode',
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
   --

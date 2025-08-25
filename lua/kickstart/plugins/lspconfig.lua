@@ -266,7 +266,7 @@ return {
       -- `dependencies` table for `nvim-lspconfig` above.
       --
       -- You can add other tools here that you want Mason to install
-      -- for you, so that they are available from within Neovim.
+      -- for you, so that they are available from within Neovim.servers
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
@@ -282,6 +282,20 @@ return {
         automatic_enable = { 'pylsp' },
       }
       -- NOTE: Try to modularize the LSP configurations
+      vim.lsp.config('ruff', {
+        init_options = {
+          settings = {
+            lineLength = 80,
+            ['show-fixes'] = true,
+            format = {
+              ['docstring-code-length'] = 60,
+            },
+            lint = {
+              ignore = { 'W291' },
+            },
+          },
+        },
+      })
       vim.lsp.config('pylsp', {
         root_markers = { 'pyproject.toml', 'setup.py', 'setup.cfg', 'requirements.txt', 'Pipfile', '.git' },
         settings = {
@@ -289,13 +303,25 @@ return {
             plugins = {
               pycodestyle = {
                 enabled = true,
-                ignore = { 'W291', 'E265', 'E501' },
-                maxLineLength = 79,
+                -- ignore = { 'W291', 'E265' },
+                ignore = { 'E501' },
+                -- maxLineLength = 79,
+              },
+              pyflakes = {
+                enabled = false,
+              },
+              pydocstyle = {
+                enabled = true,
+              },
+              pylint = {
+                enabled = false,
               },
             },
           },
         },
       })
+      vim.lsp.enable 'ruff'
+      vim.lsp.enable 'pylsp'
     end,
   },
 }
