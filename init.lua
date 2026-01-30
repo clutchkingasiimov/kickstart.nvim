@@ -89,7 +89,12 @@ P.S. You can delete this when you're done too. It's your config now! :)
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 
-vim.o.background = 'dark'
+-- vim.o.background = 'dark'
+
+-- Interface arguments for UNIX / MacOS display
+vim.opt.fileformats = 'unix,dos'
+vim.opt.fileformat = 'unix'
+vim.opt.fixendofline = false
 
 -- Code folding arguments
 vim.opt.foldmethod = 'expr'
@@ -99,10 +104,14 @@ vim.opt.foldtext = ''
 vim.opt.foldlevel = 99
 vim.opt.foldnestmax = 4
 
+--Split pane line separator color
+vim.api.nvim_command 'highlight WinSeparator guifg=#d3a121'
+
 vim.g.maplocalleader = ' '
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
-vim.o.guifont = 'Consolas:h10' -- Adjust the font and size as needed
+vim.o.guifont = 'UbuntoMonoNerdFont' -- Adjust the font and size as needed
+vim.o.winborder = 'double'
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 -- [[ Setting options ]]
@@ -254,25 +263,37 @@ require('lazy').setup({
   --
   -- Use the `dependencies` key to specify the dependencies of a particular plugin
 
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is.
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    -- 'folke/tokyonight.nvim',
-    'EdenEast/nightfox.nvim', --Nightfox theme plugin
-    priority = 1000, -- Make sure to load this before all the other start plugins.
-    config = function()
-      ---@diagnostic disable-next-line: missing-fields
-      -- require('gruvbox').setup {}
-
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'carbonfox'
-      vim.o.background = 'dark'
-    end,
-  },
+  -- { -- You can easily change to a different colorscheme.
+  --   -- Change the name of the colorscheme plugin below, and then
+  --   -- change the command in the config to whatever the name of that colorscheme is.
+  --   --
+  --   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
+  --   'EdenEast/nightfox.nvim', --Nightfox theme plugin
+  --   priority = 1000, -- Make sure to load this before all the other start plugins.
+  --   config = function()
+  --     ---@diagnostic disable-next-line: missing-fields
+  --     require('nightfox').setup {
+  --       dim_inactive = true,
+  --       styles = {
+  --         comments = 'italic',
+  --         keywords = 'bold',
+  --         types = 'bold',
+  --       },
+  --       palettes = {
+  --         carbonfox = {
+  --           bg1 = '#000000', -- Default background
+  --           inactive = '#090909',
+  --         },
+  --       },
+  --     }
+  --     -- Load the colorscheme here.
+  --     -- Like many other themes, this one has different styles, and you could load
+  --     -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+  --     vim.cmd.colorscheme 'duskfox'
+  --     -- vim.o.background = 'dark'
+  --   end,
+  -- },
+  require 'custom.themes.tokyonight',
 
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and

@@ -282,6 +282,8 @@ return {
         automatic_enable = { 'pylsp' },
       }
       -- NOTE: Try to modularize the LSP configurations
+
+      --NOTE: Python linter
       vim.lsp.config('ruff', {
         init_options = {
           settings = {
@@ -296,6 +298,7 @@ return {
           },
         },
       })
+      --NOTE: Python LSP
       vim.lsp.config('pylsp', {
         root_markers = { 'pyproject.toml', 'setup.py', 'setup.cfg', 'requirements.txt', 'Pipfile', '.git' },
         settings = {
@@ -320,8 +323,25 @@ return {
           },
         },
       })
+      vim.lsp.config('rust_analyzer', {
+        settings = {
+          ['rust-analyzer'] = {
+            cargo = { targetDir = true },
+            check = { command = 'clippy' },
+            inlayHints = {
+              bindingModeHints = { enabled = true },
+              closureCaptureHints = { enabled = true },
+              closureReturnTypeHints = { enable = 'always' },
+              maxLength = 100,
+            },
+            rustc = { source = 'discover' },
+          },
+        },
+      })
+      --Enable the configured LSPs here
       vim.lsp.enable 'ruff'
       vim.lsp.enable 'pylsp'
+      vim.lsp.enable 'rust_analyzer'
     end,
   },
 }

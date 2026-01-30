@@ -6,5 +6,10 @@ return {
         width = 200,
       },
     },
+    plugins = {
+      options = {
+        laststatus = 3,
+      },
+    },
   },
 }

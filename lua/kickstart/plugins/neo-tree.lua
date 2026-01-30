@@ -11,8 +11,7 @@ return {
   },
   cmd = 'Neotree',
   keys = {
-    { '\\', ':Neotree reveal<CR>', desc = 'NeoTree reveal', silent = true },
-    -- { '\\g', ':Neotree focus git_status right<CR>', desc = 'NeoTree Git status', silent = true },
+    { '\\', ':Neotree float reveal<CR>', desc = 'NeoTree reveal', silent = true },
   },
   opts = {
     filesystem = {
@@ -22,6 +21,7 @@ return {
           ['\\'] = 'close_window',
           ['P'] = { 'toggle_preview', config = {
             title = 'File Preview',
+            use_float = true,
           } },
           ['<C-f>'] = { 'scroll_preview', config = { direction = -5 } },
           ['<C-b>'] = { 'scroll_preview', config = { direction = 5 } },
@@ -30,13 +30,15 @@ return {
     },
 
     source_selector = {
-      -- winbar = true,
+      winbar = true,
       statusline = false,
 
       sources = {
         { source = 'filesystem' },
+        { source = 'buffers' },
         { source = 'git_status' },
       },
+      tabs_layout = 'center',
     },
   },
 }

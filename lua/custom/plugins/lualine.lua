@@ -3,12 +3,15 @@ return {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
     config = function()
-      local custom_powerline = require 'lualine.themes.powerline_dark'
-      custom_powerline.inactive.c.fg = '#FF0000'
+      -- local custom_powerline = require 'lualine.themes.gruvbox_dark'
+      -- local custom_powerline = require 'lualine.themes.powerline_dark'
+      -- custom_powerline.inactive.c.fg = '#FF0000'
+      -- custom_powerline.insert.c.bg = '#83a598'
+      -- custom_powerline.visual.c.bg = '#d65d0e'
       require('lualine').setup {
         options = {
           icons_enabled = true,
-          theme = custom_powerline,
+          -- theme = custom_powerline,
           -- section_separators = { left = '', right = '' },
         },
         sections = {

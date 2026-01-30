@@ -13,7 +13,7 @@ return {
         on_open = function(t)
           -- Add your on_open logic here
         end,
-        hide_numbers = true,
+        hide_numbers = false,
         autochdir = true,
         shade_terminals = true,
         shading_factor = 5,
@@ -21,13 +21,17 @@ return {
         insert_mappings = true,
         persist_size = true,
         persist_mode = true,
-        direction = 'horizontal',
+        direction = 'float',
+        size = 30,
         shell = vim.o.shell,
         winbar = {
           enabled = false,
           name_formatter = function(term)
             return term.name
           end,
+        },
+        float_opts = {
+          title_pos = 'center',
         },
       }
       local Terminal = require('toggleterm.terminal').Terminal
