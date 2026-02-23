@@ -1,6 +1,6 @@
 return { -- Autocompletion
   {
-    'saghen/blink.cmp',
+    'Saghen/blink.cmp',
     event = 'VimEnter',
     version = '1.*',
     dependencies = {
@@ -81,6 +81,7 @@ return { -- Autocompletion
           },
         },
         documentation = { auto_show = false, auto_show_delay_ms = 500 },
+        ghost_text = { enabled = true },
       },
 
       sources = {
