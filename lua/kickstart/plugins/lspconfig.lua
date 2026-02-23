@@ -81,7 +81,7 @@ return {
 
           -- Fuzzy find all the symbols in your current document.
           --  Symbols are things like variables, functions, types, etc.
-          map('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+          map('gO', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
 
           -- Fuzzy find all the symbols in your current workspace.
           --  Similar to document symbols, except searches over your entire project.
@@ -209,8 +209,6 @@ return {
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
-        -- gopls = {}
         pylsp = {
           filetypes = { 'python' },
           settings = {
@@ -271,8 +269,6 @@ return {
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
         'lua_ls', -- Lua LSP server
-        -- 'black', -- Python static analysis by Microsoft
-        -- 'pylint', -- Python linter
         'pylsp', -- Python LSP server
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
@@ -342,6 +338,7 @@ return {
       vim.lsp.enable 'ruff'
       vim.lsp.enable 'pylsp'
       vim.lsp.enable 'rust_analyzer'
+      vim.lsp.enable 'lua_ls'
     end,
   },
 }

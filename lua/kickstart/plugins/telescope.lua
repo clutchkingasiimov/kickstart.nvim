@@ -76,31 +76,13 @@ return {
     vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
     vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
     vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
+    vim.keymap.set('n', '<leader>so', builtin.oldfiles, { desc = '[S]how [O]ldfiles' })
+    vim.keymap.set('n', '<leader>st', builtin.treesitter, { desc = 'Show Treesitter' })
     vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
     vim.keymap.set('n', '<leader>sR', builtin.registers, { desc = '[S]earch [Re]gisters' })
     vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
     vim.keymap.set('n', '<leader>sgc', builtin.git_commits, { desc = 'Show Git commits' })
     vim.keymap.set('n', '<leader>sgb', builtin.git_branches, { desc = 'Show Git branches' })
-
-    -- load the session for the current directory
-    vim.keymap.set('n', '<leader>qs', function()
-      require('persistence').load()
-    end)
-
-    -- select a session to load
-    vim.keymap.set('n', '<leader>qS', function()
-      require('persistence').select()
-    end)
-
-    -- load the last session
-    vim.keymap.set('n', '<leader>ql', function()
-      require('persistence').load { last = true }
-    end)
-
-    -- stop Persistence => session won't be saved on exit
-    vim.keymap.set('n', '<leader>qd', function()
-      require('persistence').stop()
-    end)
 
     -- Slightly advanced example of overriding default behavior and theme
     vim.keymap.set('n', '<leader>/', function()
