@@ -195,39 +195,15 @@ return {
       --  By default, Neovim doesn't support everything that is in the LSP specification.
       --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
       --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
-      -- local capabilities = vim.lsp.protocol.make_client_capabilities()
-      -- capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
       local capabilities = require('blink.cmp').get_lsp_capabilities()
 
-      -- Enable the following language servers
-      --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
-      --
-      --  Add any additional override configuration in the following tables. Available keys are:
-      --  - cmd (table): Override the default command used to start the server
-      --  - filetypes (table): Override the default list of associated filetypes for the server
-      --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
-      --  - settings (table): Override the default settings passed when initializing the server.
-      --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+      -- servers table is used as an install list for mason.
+      -- Actual LSP settings are configured via vim.lsp.config() below.
       local servers = {
-        pylsp = {
-          filetypes = { 'python' },
-          settings = {
-            pylsp = {
-              configurationSources = { 'pycodestyle' },
-              plugins = {
-                pycodestyle = {
-                  enabled = true,
-                  ignore = 'W291',
-                  maxLineLength = 80,
-                },
-                pyflakes = { enabled = false },
-                -- Also try disabling other linters that might be interfering
-                pylint = { enabled = false },
-                flake8 = { enabled = false },
-              },
-            },
-          },
-        }, -- rust_analyzer = {},
+        -- pylsp provides LSP features (hover, completions, go-to-def, etc.)
+        -- Linting is handled by ruff to avoid duplicate diagnostics.
+        pylsp = {},
+        -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -237,9 +213,6 @@ return {
         -- ts_ls = {},
         --
         lua_ls = {
-          -- cmd = { ... },
-          -- filetypes = { ... },
-          -- capabilities = {},
           settings = {
             Lua = {
               completion = {
@@ -251,74 +224,55 @@ return {
           },
         },
       }
-      -- print('Servers table:', vim.inspect(servers))
-      -- Ensure the servers and tools above are installed
-      --
+
+      -- Ensure the servers and tools above are installed.
       -- To check the current status of installed tools and/or manually install
-      -- other tools, you can run
-      --    :Mason
-      --
-      -- You can press `g?` for help in this menu.
-      --
-      -- `mason` had to be setup earlier: to configure its options see the
-      -- `dependencies` table for `nvim-lspconfig` above.
-      --
-      -- You can add other tools here that you want Mason to install
-      -- for you, so that they are available from within Neovim.servers
+      -- other tools, you can run :Mason (press `g?` for help in this menu).
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
-        'lua_ls', -- Lua LSP server
-        'pylsp', -- Python LSP server
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       require('mason-lspconfig').setup {
-        ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer
+        ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
         automatic_enable = { 'pylsp' },
       }
-      -- NOTE: Try to modularize the LSP configurations
 
-      --NOTE: Python linter
+      -- Python: ruff handles all linting and formatting (E, F, B, I, UP, N, S rules)
       vim.lsp.config('ruff', {
         init_options = {
           settings = {
-            lineLength = 80,
-            ['show-fixes'] = true,
-            format = {
-              ['docstring-code-length'] = 60,
-            },
+            lineLength = 79,
+            exclude = { '.git', '.venv', 'build' },
             lint = {
-              ignore = { 'W291' },
+              enable = true,
+              select = { 'E', 'F', 'B', 'I', 'UP', 'N', 'S' },
+              ignore = { 'E501' },
+            },
+            format = {
+              preview = true,
             },
           },
         },
       })
-      --NOTE: Python LSP
+
+      -- Python: pylsp provides LSP features only (hover, completions, go-to-def, etc.)
+      -- All linters disabled here since ruff handles them to avoid duplicate diagnostics.
       vim.lsp.config('pylsp', {
-        root_markers = { 'pyproject.toml', 'setup.py', 'setup.cfg', 'requirements.txt', 'Pipfile', '.git' },
         settings = {
           pylsp = {
             plugins = {
-              pycodestyle = {
-                enabled = true,
-                -- ignore = { 'W291', 'E265' },
-                ignore = { 'E501' },
-                -- maxLineLength = 79,
-              },
-              pyflakes = {
-                enabled = false,
-              },
-              pydocstyle = {
-                enabled = true,
-              },
-              pylint = {
-                enabled = false,
-              },
+              pycodestyle = { enabled = false },
+              pyflakes = { enabled = false },
+              pylint = { enabled = false },
+              flake8 = { enabled = false },
+              mccabe = { enabled = false },
             },
           },
         },
       })
+
       vim.lsp.config('rust_analyzer', {
         settings = {
           ['rust-analyzer'] = {
@@ -334,7 +288,8 @@ return {
           },
         },
       })
-      --Enable the configured LSPs here
+
+      -- Enable the configured LSPs
       vim.lsp.enable 'ruff'
       vim.lsp.enable 'pylsp'
       vim.lsp.enable 'rust_analyzer'
