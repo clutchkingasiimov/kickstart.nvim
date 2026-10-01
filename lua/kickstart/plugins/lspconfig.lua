@@ -13,7 +13,7 @@ return {
       -- Useful status updates for LSP.
       { 'j-hui/fidget.nvim', opts = {} },
 
-      -- Allows extra capabilities provided by nvim-cmp
+      -- Allows extra capabilities provided by blink.cmp
       'saghen/blink.cmp',
     },
     config = function()
@@ -54,7 +54,7 @@ return {
           --
           -- In this case, we create a function that lets us more easily define mappings specific
           -- for LSP related items. It sets the mode, buffer and description for us each time.
-          local map = function(keys, func, desc, mode)
+          local map = function(keys, func, desc, modef)
             mode = mode or 'n'
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
@@ -76,25 +76,9 @@ return {
           --  the definition of its *type*, not where it was *defined*.
           map('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
 
-          -- Find files in cwd
-          map('<leader>F', require('telescope.builtin').find_files, 'Find [F]iles')
-
           -- Fuzzy find all the symbols in your current document.
           --  Symbols are things like variables, functions, types, etc.
           map('gO', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-
-          -- Fuzzy find all the symbols in your current workspace.
-          --  Similar to document symbols, except searches over your entire project.
-          map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-
-          --Show the buffer's git commits with diffs
-          map('<leader>cc', require('telescope.builtin').git_commits, '[C]ode [C]ommits for Git')
-
-          --Show git branches
-          map('<leader>cb', require('telescope.builtin').git_branches, '[C]ode [B]ranches for Git')
-
-          --Show git status
-          map('<leader>cs', require('telescope.builtin').git_status, '[C]ode [S]tatus for Git')
 
           -- Rename the variable under your cursor.
           --  Most Language Servers support renaming across files, etc.
@@ -108,13 +92,16 @@ return {
           --  For example, in C this would take you to the header.
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
+          -- Show workspace symbols
+          map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+
           -- This function resolves a difference between neovim nightly (version 0.11) and stable (version 0.10)
           ---@param client vim.lsp.Client
           ---@param method vim.lsp.protocol.Method
           ---@param bufnr? integer some lsp support methods only in specific files
           ---@return boolean
           local function client_supports_method(client, method, bufnr)
-            if vim.fn.has 'nvim-0.11' == 1 then
+            if vim.fn.has 'nvim-0.12' == 1 then
               return client:supports_method(method, bufnr)
             else
               return client.supports_method(method, { bufnr = bufnr })
@@ -127,6 +114,7 @@ return {
           --
           -- When you move your cursor, the highlights will be cleared (the second autocommand).
           local client = vim.lsp.get_client_by_id(event.data.client_id)
+
           if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
             local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
             vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
@@ -203,6 +191,8 @@ return {
         -- pylsp provides LSP features (hover, completions, go-to-def, etc.)
         -- Linting is handled by ruff to avoid duplicate diagnostics.
         pylsp = {},
+        -- ruff handles linting and formatting for Python.
+        ruff = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -235,23 +225,28 @@ return {
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       require('mason-lspconfig').setup {
-        ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
-        automatic_enable = { 'pylsp' },
+        -- Deliberately empty: mason-tool-installer above handles all installations.
+        ensure_installed = {},
       }
+      vim.lsp.config('*', { capabilities = capabilities })
 
-      -- Python: ruff handles all linting and formatting (E, F, B, I, UP, N, S rules)
       vim.lsp.config('ruff', {
         init_options = {
           settings = {
+            configurationPreference = 'filesystemFirst',
             lineLength = 79,
             exclude = { '.git', '.venv', 'build' },
             lint = {
               enable = true,
-              select = { 'E', 'F', 'B', 'I', 'UP', 'N', 'S' },
               ignore = { 'E501' },
             },
             format = {
               preview = true,
+              ['indent-style'] = 'tab',
+            },
+            codeAction = {
+              fixAll = true,
+              organizeImports = true,
             },
           },
         },
@@ -276,8 +271,8 @@ return {
       vim.lsp.config('rust_analyzer', {
         settings = {
           ['rust-analyzer'] = {
-            cargo = { targetDir = true },
-            check = { command = 'clippy' },
+            -- cargo = { targetDir = true },
+            -- check = { command = 'clippy' },
             inlayHints = {
               bindingModeHints = { enabled = true },
               closureCaptureHints = { enabled = true },
